@@ -6,11 +6,9 @@
 <pre>
 <?php
 
-$appid = '';
-
 if (!empty($_GET['acronym'])) {
     $acronym = $_GET['acronym'];
-    $endpoint = "api.openweathermap.org/data/2.5/weather?appid=$appid&q=$acronym&mode=html&units=imperial";
+    $endpoint = "http://www.nactem.ac.uk/software/acromine/dictionary.py?sf=$acronym";
 
     // create a new cURL resource
     $ch = curl_init();
@@ -26,6 +24,16 @@ if (!empty($_GET['acronym'])) {
     curl_close($ch);
 
     echo $res;
+
+    $array = json_decode($res, true);
+
+    echo "<ul>";
+
+    foreach ( $array[0]['lfs'] as $key => $value ) {
+        echo "<li>$value[lf]</li>";
+    }
+
+    echo "</ul>";
 }
 ?>
 </pre>
